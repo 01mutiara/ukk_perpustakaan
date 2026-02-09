@@ -30,7 +30,7 @@ include $halaman . ".php";
 } else { ?><br>
 <h4>Selamat Datang <?= $_SESSION['nama_anggota']; ?></h4>
 <form action="?halaman=cari" method="post">
-    <label class="text-muted">Yuk Cari Judul Buku</label>
+    <label class="text-muted">Yuk Cari Judul Buku</label><br>
     <input type="text" name="kunci" class="form-control mb-2" required placeholder="Masukan Judul Buku">
     <button type="submit" class="btn btn-primary">Cari</button>
 </form>
@@ -46,7 +46,7 @@ include $halaman . ".php";
     <?php 
     $no = 1;
     $query = "SELECT * FROM transaksi,buku WHERE buku.id_buku=transaksi.id_buku AND
-    transaksi.id_anggota=$_SESSION[id_anggota] AND status_transaksi='peminjama'";
+    transaksi.id_anggota=$_SESSION[id_anggota] AND status_transaksi='peminjaman'";
     $data = mysqli_query($koneksi,$query);
     foreach($data as $peminjaman){?>
     <tr>
@@ -65,14 +65,18 @@ include $halaman . ".php";
 <h4>Daftar Buku:</h4>
 <div class="row">
 <?php
-$data_buku = mysqli_query($koneksi, "SELECT FROM buku ORDER BY id_buku DESC");
+//$data_buku = mysqli_query($koneksi, "SELECT FROM buku ORDER BY id_buku DESC");
+$data_buku = mysqli_query($koneksi, "SELECT * FROM buku ORDER BY id_buku DESC");
+
 foreach($data_buku as $buku) {
 ?>
 <div class="col-md-3">
 <div class="card shadow-sm p-3 d-flex">
 <h5><?= $buku['judul_buku'] ?></h5>
-<p><strong>Pengarang:</strong> <?= $buku['penerbit'] ?></p>
-<p><strong>Diterbitkan tahun :</strong> <?= $buku['tahun_terbit'] ?></p>
+
+<p><strong>Pengarang:</strong> <?= $buku['pengarang'] ?></p>
+<p><strong>Penerbit:</strong> <?= $buku['penerbit'] ?></p>
+
 <?php if($buku['status']=="tersedia"){ ?>
 <span class="badge bg-success mb-1"> Tersedia</span>
 <a href="?halaman=peminjaman&id=<?= $buku['id_buku'] ?>" class="btn btn-primary text-white"

@@ -1,3 +1,12 @@
+<?php
+    session_start();
+
+    if(isset($_SESSION["id_anggota"])){
+        header("Location: http://localhost/perpustakaan3/anggota/dashboard.php");
+        exit();
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
